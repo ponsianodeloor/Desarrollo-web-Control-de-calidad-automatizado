@@ -1,25 +1,31 @@
 {
-  "name": "pruebas_automatizadas",
+  "name": "control-de-calidad-web-automatizado",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "csslint-stylish": "0.0.6",
-    "gulp": "^3.9.1",
-    "gulp-casperjs": "0.0.6",
-    "gulp-csslint": "^1.0.0",
-    "gulp-jslint": "^1.0.10",
-    "gulp-phantom": "0.0.6",
-    "gulp-webserver": "^0.9.1",
-    "opn": "^4.0.2",
-    "phantomcss": "^1.1.5"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ponsianodeloor/Desarrollo-web-Control-de-calidad-automatizado.git"
   },
+  "author": "Ponsiano De Loor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ponsianodeloor/Desarrollo-web-Control-de-calidad-automatizado/issues"
+  },
+  "homepage": "https://github.com/ponsianodeloor/Desarrollo-web-Control-de-calidad-automatizado#readme",
   "devDependencies": {
-    "gulp-csslint": "^1.0.0"
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.11.5",
+    "gulp-cli": "^2.3.0",
+    "gulp-webserver": "^0.9.1"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-open": "^3.0.1",
+    "os": "^0.1.1"
   }
 }

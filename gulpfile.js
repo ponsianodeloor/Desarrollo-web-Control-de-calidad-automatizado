@@ -1,78 +1,47 @@
-/******
- *
- * IMPORTANTE
- *
- * Este archivo usa una version antigua de Gulp que puede tener problemas de compatibilidad con node
- *
- * si tienes problemas, sigue las instrucciones detalladas en el repositorio original
- *
- * https://github.com/siddharta1337/Desarrollo-web-Control-de-calidad-automatizado
- *
- */
-
-
+var os = require('os');
 var gulp = require('gulp');
-var webserver = require('gulp-webserver');
-var opn = require('opn');
-var  phantom  =  require("gulp-phantom");
-var casperJs = require('gulp-casperjs');
-
-var csslint = require('gulp-csslint');
-var jslint = require('gulp-jslint');
-
-
-var server = {
-    host: 'localhost',
-    port: '8001'
-}
-
-gulp.task('webserver', function () {
-
-    gulp.src('app')
-        .pipe(webserver({
-            host: server.host,
-            port: server.port,
-            livereload: true,
-            directoryListing: false
-        }));
-
+var open = require('gulp-open');
+ 
+ 
+// Default usage:
+// Open one file with default application
+ 
+gulp.task('open', function(){
+  gulp.src('./app/index.html')
+  .pipe(open());
 });
-
-gulp.task('openbrowser', function () {
-    opn('http://' + server.host + ':' + server.port);
+ 
+ 
+var browser = os.platform() === 'linux' ? 'google-chrome' : (
+  os.platform() === 'darwin' ? 'google chrome' : (
+  os.platform() === 'win32' ? 'chrome' : 'firefox'));
+ 
+gulp.src('./package.json').pipe(open({app: 'firefox'}));
+ 
+gulp.task('browser', function(){
+  gulp.src('./app/historia.html')
+  .pipe(open({app: browser}));
 });
-
-gulp.task('watch', function () {
-    gulp.watch('app/*.html');
-    gulp.watch('app/css/*.css');
+ 
+// Simple usage, no options.
+// This will use the uri in the default browser
+ 
+gulp.task('uri', function(){
+  gulp.src(__filename)
+  .pipe(open({uri: 'http://www.google.com'}));
 });
-
-
-gulp.task('phantom', function () {
-    gulp.src("./casper/*.js")
-        .pipe(phantom())
-        .pipe(gulp.dest("./test_data/"));
-
-})
-
-gulp.task('casper' , function(){
-    gulp.src("./casper/*.js")
-    .pipe(casperJs());
-})
-
-gulp.task('validar-js' , function(){
-    gulp.src('app/script/*.js')
-    .pipe(jslint())
-    .pipe(jslint.reporter('stylish'));
-
-})
-
-gulp.task('validar-css' , function(){
-    gulp.src('app/css/*.css')
-    .pipe(csslint())
-    .pipe(csslint.formatter(require('csslint-stylish')))
-
-})
-
-
-gulp.task('default', ['webserver', 'watch', 'openbrowser'])
+ 
+// Open an URL in a given browser:
+ 
+gulp.task('app', function(){
+  var options = {
+    uri: 'localhost:3000',
+    app: 'firefox'
+  };
+  gulp.src(__filename)
+  .pipe(open(options));
+});
+ 
+// Run the task with gulp
+ 
+gulp.task('default', ['open', 'uri', 'app', 'browser']);
